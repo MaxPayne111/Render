@@ -1,8 +1,14 @@
+import os
 from flask import Flask, request, jsonify
 from transformers import pipeline
 
 app = Flask(__name__)
-qa_pipeline = pipeline("question-answering", model="distilbert-base-uncased-distilled-squad")
+
+# Load the smaller model to stay under memory limits
+qa_pipeline = pipeline(
+    "question-answering",
+    model="sshleifer/tiny-distilbert-base-cased-distilled-squad"
+)
 
 @app.route("/qa", methods=["POST"])
 def qa():
